@@ -1,29 +1,43 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  	<fire-canvas class="fire"></fire-canvas>
+  	<router-view></router-view>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import FireCanvas from './components/common/FireCanvas'
+import './assets/css/index.scss'
+import 'element-ui/lib/theme-chalk/index.css'
+export default {
+    mounted () {
+        document.addEventListener('visibilitychange', this.changeTitle, false)
+				const s = document.createElement('script');
+				s.type = 'text/javascript';
+				s.src = 'http://pv.sohu.com/cityjson?ie=utf-8';
+				document.body.appendChild(s);
+    },
+    methods: {
+        changeTitle () {          
+            if (document.hidden) {
+                document.title = '宋钰的博客'
+            } else {
+                document.title = '宋钰的博客'
+            }
+        }
+    },
+    components: {
+    		FireCanvas
     }
-  }
 }
+</script>
+
+<style>
+    #app {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        min-height: 100%;
+        width: 100%;
+    }
 </style>

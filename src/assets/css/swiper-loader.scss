@@ -1,0 +1,443 @@
+@media screen and (min-width:1024px) {
+    #Blog {
+        .left {
+            flex: 0 1 12.125rem;
+            .search {
+                .handle-input {
+                    width: 7rem;
+                    display: inline-block
+                }
+                .handle-select {
+                    width: 4.5rem
+                }
+            }
+            .latest-comment {
+                ul {
+                    margin-left: 2em;
+                    li {
+                        font-size: .915rem;
+                        line-height: .915rem;
+                        margin-bottom: 1rem
+                    }
+                }
+            }
+            .about {
+                span {
+                    font-size: .8rem
+                }
+            }
+        }
+        .right {
+            flex: 0 1 45rem;
+            margin-left: 5.5rem
+        }
+    }
+}
+
+@media screen and (min-width:1280px) {
+    #Blog {
+        .left {
+            flex: 0 1 14.25rem;
+            .search {
+                .handle-input {
+                    width: 5.5rem;
+                    display: inline-block
+                }
+                .handle-select {
+                    width: 4.5rem
+                }
+            }
+            .latest-comment {
+                ul {
+                    margin-left: 2em;
+                    li {
+                        font-size: 1.05rem;
+                        line-height: 1.05rem;
+                        margin-bottom: 1rem
+                    }
+                }
+            }
+            .about {
+                span {
+                    font-size: 1rem
+                }
+            }
+        }
+        .right {
+            flex: 0 1 55rem;
+            margin-left: 7rem
+        }
+    }
+}
+
+@media screen and (min-width:1366px) {
+    #Blog {
+        .left {
+            flex: 0 1 15.25rem;
+            .search {
+                .handle-input {
+                    width: 6.5rem;
+                    display: inline-block
+                }
+                .handle-select {
+                    width: 4.5rem
+                }
+            }
+            .latest-comment {
+                ul {
+                    margin-left: 2em;
+                    li {
+                        font-size: 1.15rem;
+                        line-height: 1.15rem;
+                        margin-bottom: 1rem
+                    }
+                }
+            }
+            .about {
+                span {
+                    font-size: 1.1rem
+                }
+            }
+        }
+        .right {
+            flex: 0 1 57.625rem;
+            margin-left: 7.5rem
+        }
+    }
+}
+
+@media screen and (min-width:1440px) {
+    #Blog {
+        .left {
+            flex: 0 1 17rem;
+            .search {
+                .handle-input {
+                    width: 7rem;
+                    display: inline-block
+                }
+                .handle-select {
+                    width: 5rem
+                }
+            }
+            .latest-comment {
+                ul {
+                    margin-left: 2em;
+                    li {
+                        font-size: 1.15rem;
+                        line-height: 1.15rem;
+                        margin-bottom: 1rem
+                    }
+                }
+            }
+            .about {
+                span {
+                    font-size: 1.2rem
+                }
+            }
+        }
+        .right {
+            flex: 0 1 60rem;
+            margin-left: 11rem
+        }
+    }
+}
+
+@media screen and (min-width:1680px) {
+    #Blog {
+        .left {
+            flex: 0 1 17rem;
+            .search {
+                .handle-input {
+                    width: 8rem;
+                    display: inline-block
+                }
+                .handle-select {
+                    width: 4.5rem
+                }
+            }
+            .latest-comment {
+                ul {
+                    margin-left: 2em;
+                    li {
+                        font-size: 1.25rem;
+                        line-height: 1.25rem;
+                        margin-bottom: 1rem
+                    }
+                }
+            }
+            .about {
+                span {
+                    font-size: 1.25rem
+                }
+            }
+        }
+        .right {
+            flex: 0 1 60rem;
+            margin-left: 11rem
+        }
+    }
+}
+
+@media screen and (min-width:1920px) {
+    #Blog {
+        .left {
+            flex: 0 1 18rem;
+            .search {
+                .handle-input {
+                    width: 9rem;
+                    display: inline-block
+                }
+                .handle-select {
+                    width: 4.5rem
+                }
+            }
+            .latest-comment {
+                ul {
+                    margin-left: 2em;
+                    li {
+                        font-size: 1.35rem;
+                        line-height: 1.35rem;
+                        margin-bottom: 1rem
+                    }
+                }
+            }
+            .about {
+                span {
+                    font-size: 1.3rem
+                }
+            }
+        }
+        .right {
+            flex: 0 1 60rem;
+            margin-left: 14rem
+        }
+    }
+}
+
+@media screen and (min-width:1024px) {
+    #articleBox {
+        .article {
+            margin: 1.25rem 12.625rem 0;
+            .crumbs {
+                i {
+                    font-size: 1.2rem
+                }
+            }
+        }
+        #content {
+            .title {
+                font-size: 1.6rem
+            }
+            .content {
+                font-size: .95rem
+            }
+            .appendInfo {
+                font-size: 1.05rem;
+                span {
+                    margin-left: .625rem
+                }
+                a.commentCount {
+                    margin-left: .625rem
+                }
+                i {
+                    margin-right: .3125rem
+                }
+                i.icon-shijian,
+                i.icon-label,
+                i.icon-huifu {
+                    font-size: 1.25rem
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1280px) {
+    #articleBox {
+        .article {
+            margin: 1.25rem 15.625rem 0;
+            .crumbs {
+                i {
+                    font-size: 1.25rem
+                }
+            }
+        }
+        #content {
+            .title {
+                font-size: 1.6rem
+            }
+            .content {
+                font-size: 1rem
+            }
+            .appendInfo {
+                font-size: 1.05rem;
+                span {
+                    margin-left: .625rem
+                }
+                a.commentCount {
+                    margin-left: .625rem
+                }
+                i {
+                    margin-right: .3125rem
+                }
+                i.icon-shijian,
+                i.icon-label,
+                i.icon-huifu {
+                    font-size: 1.25rem
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1366px) {
+    #articleBox {
+        .article {
+            margin: 1.25rem 15.625rem 0;
+            .crumbs {
+                i {
+                    font-size: 1.3rem
+                }
+            }
+        }
+        #content {
+            .title {
+                font-size: 1.65rem
+            }
+            .content {
+                font-size: 1rem
+            }
+            .appendInfo {
+                font-size: 1.05rem;
+                span {
+                    margin-left: .625rem
+                }
+                a.commentCount {
+                    margin-left: .625rem
+                }
+                i {
+                    margin-right: .3125rem
+                }
+                i.icon-shijian,
+                i.icon-label,
+                i.icon-huifu {
+                    font-size: 1.25rem
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1440px) {
+    #articleBox {
+        .article {
+            margin: 1.25rem 15.625rem 0;
+            .crumbs {
+                i {
+                    font-size: 1.35rem
+                }
+            }
+        }
+        #content {
+            .title {
+                font-size: 1.75rem
+            }
+            .content {
+                font-size: 1rem
+            }
+            .appendInfo {
+                font-size: 1.05rem;
+                span {
+                    margin-left: .625rem
+                }
+                a.commentCount {
+                    margin-left: .625rem
+                }
+                i {
+                    margin-right: .3125rem
+                }
+                i.icon-shijian,
+                i.icon-label,
+                i.icon-huifu {
+                    font-size: 1.25rem
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1680px) {
+    #articleBox {
+        .article {
+            margin: 1.25rem 15.625rem 0;
+            .crumbs {
+                i {
+                    font-size: 1.5rem
+                }
+            }
+        }
+        #content {
+            .title {
+                font-size: 1.7rem
+            }
+            .content {
+                font-size: 1.1rem
+            }
+            .appendInfo {
+                font-size: 1.5rem;
+                span {
+                    margin-left: .725rem
+                }
+                a.commentCount {
+                    margin-left: .725rem
+                }
+                i {
+                    margin-right: .4125rem
+                }
+                i.icon-shijian,
+                i.icon-label,
+                i.icon-huifu {
+                    font-size: 2.25rem
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1920px) {
+    #articleBox {
+        .article {
+            margin: 1.25rem 15.625rem 0;
+            .crumbs {
+                i {
+                    font-size: 1.5rem
+                }
+            }
+        }
+        #content {
+            .title {
+                font-size: 1.7rem
+            }
+            .content {
+                font-size: 1.1rem
+            }
+            .appendInfo {
+                font-size: 1.5rem;
+                span {
+                    margin-left: .725rem
+                }
+                a.commentCount {
+                    margin-left: .725rem
+                }
+                i {
+                    margin-right: .4125rem
+                }
+                i.icon-shijian,
+                i.icon-label,
+                i.icon-huifu {
+                    font-size: 2.25rem
+                }
+            }
+        }
+    }
+}

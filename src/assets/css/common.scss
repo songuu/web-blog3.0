@@ -1,0 +1,259 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    font-size: 16px;
+}
+
+body {
+    height: 100%;
+    color: #606975;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    text-decoration: none;
+    color: #55ffff;
+}
+
+.hashTitle {
+    color: white;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    padding-top: 0.8rem;
+}
+
+.container1 {
+    min-height: 400px;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.crumbs {
+    margin-bottom: 20px;
+}
+
+.pagination {
+    margin: 20px 0;
+    text-align: right;
+}
+
+.el-button {
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 400px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    html {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+$prefixForWebkit: true !default; //设置所有浏览器前缀问题
+$prefixForMozilla: true !default;
+$prefixForMicrosoft: true !default;
+$prefixForOpera: false !default;
+$prefixNo: true !default;
+@mixin prefixer($property, $value, $prefixes: o webkit) {
+    @each $prefix in $prefixes {
+        @if $prefix==webkit and $prefixForWebkit==true {
+            -webkit-#{$property}: $value;
+        }
+        @else if $prefix==moz and $prefixForMozilla==true {
+            -moz-#{$property}: $value;
+        }
+        @else if $prefix==ms and $prefixForMicrosoft==true {
+            -ms-#{$property}: $value;
+        }
+        @else if $prefix==o and $prefixForOpera==true {
+            -o-#{$property}: $value;
+        }
+    }
+    @if $prefixNo {
+        #{$property}: $value;
+    }
+}
+
+@mixin prefixer-value($property, $value, $prefixes: webkit moz) {
+    @each $prefix in $prefixes {
+        @if $prefix==webkit and $prefixForWebkit==true {
+            #{$property}: -webkit-#{$value};
+        }
+        @else if $prefix==moz and $prefixForMozilla==true {
+            #{$property}: -moz-#{$value};
+        }
+        @else if $prefix==o and $prefixForMozilla==true {
+            #{$property}: -o-#{$value};
+        }
+        @else if $prefix==ms and $prefixForMicrosoft==true {
+            #{$property}: -ms-#{$value};
+        }
+    }
+    @if $prefixNo {
+        #{$property}: $value;
+    }
+}
+
+.contain {
+    .newBlog {
+        min-height: 43.75rem;
+        .posts {
+            margin-top: 1rem;
+            .flex {
+                color: #fff;
+                @include prefixer(display, flex, webkit moz o ms) //display: flex;
+                @include prefixer(flex-wrap, wrap, webkit moz o ms) //flex-wrap: wrap;
+                @include prefixer(justify-content, center, webkit moz o ms) //justify-content: center;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                .wrapper {
+                    margin: 20px auto;
+                    .md-card {
+                        @include prefixer(box-shadow, none, webkit moz o ms) //box-shadow: none;
+                        background-color: #fff;
+                        overflow: auto;
+                        display: flex;
+                        //flex-direction: column;
+                        @include prefixer(flex-direction, column, webkit moz o ms) z-index: 1;
+                        @include prefixer(border-radius, 2px, webkit moz o ms) //border-radius: 2px;
+                        @include prefixer(box-shadow, 0 1px 5px rgba(0, 0, 0, .2), webkit moz o ms) //box-shadow: 0 1px 5px rgba(0,0,0,.2);
+                        .md-card-media {
+                            position: relative;
+                            .swiper-container {
+                                width: 100%;
+                                height: 300px;
+                                .swiper-slide {
+                                    text-align: center;
+                                    font-size: 38px;
+                                    font-weight: 700;
+                                    background-color: #eee;
+                                    display: -webkit-box;
+                                    display: -ms-flexbox;
+                                    display: flex; //非前置浏览器设置问题
+                                    -webkit-box-pack: center;
+                                    -ms-flex-pack: center;
+                                    justify-content: center;
+                                    -webkit-box-align: center;
+                                    -ms-flex-align: center;
+                                    @include prefixer(align-items, center, webkit moz o ms) //align-items:center
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#main {
+    height: 30.4rem;
+    width: 100%;
+    margin-top: 5rem;
+    .handle-box {
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 0.5rem;
+        .handle-input {
+            width: 10rem;
+            display: inline-block;
+        }
+    }
+    .container1 {
+        width: 55rem;
+        margin: 0 auto;
+        border: none;
+        background: transparent;
+        overflow: hidden;
+        position: relative;
+        .hide {
+            height: 24rem;
+            overflow: hidden;
+            border: 1rem solid #7E8C8D;
+            border-radius: 1rem;
+            display: flex;
+            .allitems {
+                flex: 0 1 24rem;
+                height: 24rem;
+                margin-left: 2rem;
+                h3 {
+                    padding-top: 0;
+                    text-align: center;
+                    color: #000000;
+                }
+                .paginaton {
+                    overflow: hidden;
+                    margin-top: 0.5rem;
+                    margin-left: 0.5rem;
+                }
+            }
+            .hotitems {
+                margin-left: 1rem;
+                flex: 0 1 24rem;
+                height: 24rem;
+                h3 {
+                    padding-top: 0;
+                    text-align: center;
+                    color: #000000;
+                }
+            }
+        }
+    }
+}
+
+.hide1 {
+    overflow: hidden;
+    height: 26rem;
+    position: relative;
+    .paginaton {
+        position: absolute;
+        height: 5%;
+        bottom: 0.5rem;
+    }
+    .handle-box {
+        margin-bottom: 0px;
+        .handle-input {
+            width: 140px;
+            display: inline-block;
+        }
+    }
+    .del-dialog-cnt {
+        font-size: 16px;
+        text-align: center
+    }
+    .el-table {
+        height: 89%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+}
+
+
+/*自定义字体*/
+
+@font-face {
+    font-family: zwodrei;
+    src: url('../font/zwodrei.ttf');
+}
