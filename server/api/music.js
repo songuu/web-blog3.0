@@ -9,6 +9,8 @@ router.post('/api/music', confirmToken, (req, res) => {
 			title: req.query.title,
 			singer: req.query.singer,
 			rate: req.query.rate,
+			url: req.query.url,
+			pwd: req.query.pwd,
 			date: Date(),
 		}
 		new db.Music(music).save()

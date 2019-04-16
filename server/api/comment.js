@@ -18,53 +18,60 @@ const emailForm = (title, name, otherName, message, content, url) => {
 
 // 发布评论并通知站长和评论者
 router.post('/api/comment', (req, res) => {
+	console.log(req.query)
 	db.Comment.findOne({
-		name: req.body.name,
-		articleId: req.body.articleId
+		name: req.query.name,
+		articleId: req.query.articleId
 	}, (err, doc) => {
-		if(doc && doc.address !== req.body.address) {
-			res.status(403).end('用户名已存在')
-		} else if(!doc || doc.address === req.body.address) {
+		if(doc && doc.address !== req.query.address) {
+			return res.end({
+				status: 403,
+				msg: '用户名已存在'
+			})
+		} else if(!doc || doc.address === req.query.address) {
 			const comment = {
-				imgName: req.body.imgName,
-				name: req.body.name,
-				address: req.body.address,
+				imgName: req.query.imgName,
+				name: req.query.name,
+				address: req.query.address,
 				date: Date(),
-				content: req.body.content,
-				articleId: req.body.articleId,
+				content: req.query.content,
+				articleId: req.query.articleId,
 				like: 0,
 				isRead: false //被阅读
 			}
-			if(/^@(.*):/.test(req.body.content)) {
-				const reviewer = /^@(.*):/.exec(req.body.content)[1] // 评论者的名字
+			if(/^@(.*):/.test(req.query.content)) {
+				const reviewer = /^@(.*):/.exec(req.query.content)[1] // 评论者的名字
 				db.Comment.findOne({
 					name: reviewer,
-					articleId: req.body.articleId
+					articleId: req.query.articleId
 				}, (err, doc) => {
-					const url = 'www.songuu.top:8080' + req.body.curPath
+					const url = 'www.songuu.top' + req.query.curPath
 					const replyEmail = doc.address
-					const content = emailForm('欢迎常来我的博客', reviewer, req.body.name, '回复了你的评论', req.body.content, url)
+					const content = emailForm('欢迎常来我的博客', reviewer, req.query.name, '回复了你的评论', req.query.content, url)
 					mail.send(replyEmail, '您在songyu的博客有一条新评论', content, res)
 				})
 			}
 			new db.Comment(comment).save().then(() => {
-				const url = 'www.songuu.top:8080' + req.body.curPath
-				const content = emailForm('MyBlog Message', '站长', req.body.name, '评论了你的文章', req.body.content, url)
+				const url = 'www.songuu.top' + req.query.curPath
+				const content = emailForm('MyBlog Message', '站长', req.query.name, '评论了你的文章', req.query.content, url)
 				mail.send('songyuduck@163.com', '您的博客有一条新评论', content, res)
-				res.status(200).send('send email successfully')
 			}).catch(err => {
 				console.log(err)
 			})
 			db.Article.update({
-				aid: req.body.articleId
+				aid: req.query.articleId
 			}, {
 				$inc: {
 					comment_n: 1
 				}
-			}, (err, data) => {
+			}, (err) => {
 				if(err) {
 					console.log(err)
 				}
+				return res.send({
+					status: 200,
+					msg: 'succcess'
+				})
 			})
 		}
 	})
@@ -72,30 +79,42 @@ router.post('/api/comment', (req, res) => {
 
 // 获取某一篇文章的所有评论
 router.get('/api/comments', (req, res) => {
-	const articleId = req.query.payload.id
-	if(req.query.payload.sort === 'date') { // 根据时间排序评论
+	const articleId = req.query.id
+	if(req.query.sort === 'date') { // 根据时间排序评论
 		db.Comment.find({
 				articleId: articleId
 			}, 'name date content like imgName').sort({
 				date: -1
 			}).exec()
 			.then((comments) => {
-				res.send(comments)
+				return res.send({
+					status: 200,
+					data: comments,
+					msg: 'success'
+				})
 			})
-	} else if(req.query.payload.sort === 'like') { // 根据点赞数量排序评论
+	} else if(req.query.sort === 'like') { // 根据点赞数量排序评论
 		db.Comment.find({
 				articleId: articleId
 			}, 'name date content like imgName').sort({
 				like: -1
 			}).exec()
 			.then((comments) => {
-				res.send(comments)
+				return res.send({
+					status: 200,
+					data: comments,
+					msg: 'success'
+				})
 			})
 	} else { // 根据文章的aid获取所有评论
 		db.Comment.find({
 			articleId: articleId
 		}, 'name date content like imgName').exec().then((comments) => {
-			res.send(comments)
+			return res.send({
+				status: 200,
+				data: comments,
+				msg: 'success'
+			})
 		})
 	}
 })
@@ -106,7 +125,7 @@ router.get('/api/allcomments', (req, res) => {
 			date: -1
 		}).exec()
 		.then((comments) => {
-			res.send({
+			return res.send({
 				status: 200,
 				data: comments,
 				msg: 'success'
@@ -116,8 +135,8 @@ router.get('/api/allcomments', (req, res) => {
 
 // 更新评论的点赞数
 router.patch('/api/comments/:id', (req, res) => {
-	const id = req.params.id
-	if(req.body.option === 'add') {
+	const id = req.query.id
+	if(req.query.option === 'add') {
 		db.Comment.update({
 			_id: id
 		}, {
@@ -126,12 +145,18 @@ router.patch('/api/comments/:id', (req, res) => {
 			}
 		}, (err, data) => {
 			if(err) {
-				console.log(err)
+				return res.send({
+					status: 500,
+					msg: 'fail in updating like'
+				})
 			} else {
-				res.status(200).send('succeed in updating like')
+				return res.send({
+					status: 200,
+					msg: 'succeed in updating like'
+				})
 			}
 		})
-	} else if(req.body.option === 'drop') {
+	} else if(req.query.option === 'drop') {
 		db.Comment.update({
 			_id: id
 		}, {
@@ -140,9 +165,15 @@ router.patch('/api/comments/:id', (req, res) => {
 			}
 		}, (err, data) => {
 			if(err) {
-				console.log(err)
+				return res.send({
+					status: 500,
+					msg: 'fail in updating like'
+				})
 			} else {
-				res.status(200).send('succeed in updating like')
+				return res.send({
+					status: 200,
+					msg: 'succeed in updating like'
+				})
 			}
 		})
 	}
@@ -167,54 +198,18 @@ router.get('/api/commetsNum', (req, res) => {
 	})
 })
 
-// 获取没有阅读的评论
-router.get('/api/isReadcomments', (req, res) => {
-	db.Comment.find({
-			isRead: false
-		}).sort({
-			date: -1
-		}).exec()
-		.then((comments) => {
-			return res.send({
-				status: 200,
-				data: comments,
-				msg: 'success'
-			})
-		})
-})
-
 //更新是否阅读
-/*router.patch('/api/commentss/:id', (req, res) => {
-	const id = req.params.id
-	const comment = {
-		articleId: req.body.articleId,
-		imgName: req.body.imgName,
-		name: req.body.name,
-		date: req.body.date,
-		content: req.body.content,
-		address: req.body.address,
-		like: req.body.like,
-		isRead: true
-	}
-	db.Comment.update({
-		_id : id,
-	}, comment, (err, data) => {
-		if(err) {
-			console.log(err)
-		} else {
-			res.status(200).send('succeed in updating ---')
-		}
-	})
-})*/
 router.patch('/api/commentss', (req, res) => {
-	const date = req.body.date
+	const id = req.query.id
+	const date = req.query.date
 	db.Comment.update({
-		date: date,
+		articleId: id,
+		date: date
 	}, {
 		$set: {
 			isRead: true
 		}
-	}, (err, data) => {
+	}, (err) => {
 		if(err) {
 			return res.send({
 				status: 500,

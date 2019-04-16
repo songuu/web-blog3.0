@@ -137,10 +137,5 @@ export default {
 	},
 	set_all_files: (state, files) => {
 		state.files = files
-	},
-	
-	//设置通知
-	set_messageBox: (state, messageBox) => {
-		state.messageBox = messageBox
 	}
 }

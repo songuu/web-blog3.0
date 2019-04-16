@@ -146,7 +146,11 @@
 			...mapActions(['getArticle', 'getAllArticles', 'getAllaids']),
 			mark: marked,
 			getData(id) {
-				if(this.aids.indexOf(id) > -1) {
+				var aidBox = []
+				this.aids.forEach((item) => {
+					aidBox.push(item.aid)
+				})
+				if(aidBox.indexOf(id) > -1) {
 					this.getArticle(id)
 				} else {
 					this.$router.push({
@@ -182,10 +186,8 @@
 				// 防知乎掘金 复制一两个字则不添加版权信息 超过一定长度的文字 就添加版权信息
 				if(copyFont.length > 10) {
 					textFont = copyFont + '\n' +
-						'作者：OBKoro1\n' +
-						'链接：https://juejin.im/user/58714f0eb123db4a2eb95372/posts\n' +
-						'来源：掘金\n' +
-						'著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。';
+						'作者：songyu\n' +
+						'来源：宋钰的博客\n'；
 				} else {
 					textFont = copyFont; // 没超过十个字 则采用被复制的内容。
 				}

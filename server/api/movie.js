@@ -9,6 +9,8 @@ router.post('/api/movie', confirmToken, (req, res) => {
 			title: req.query.title,
 			director: req.query.director,
 			rate: req.query.rate,
+			url: req.query.url,
+			pwd: req.query.pwd,
 			date: Date(),
 		}
 		new db.Movie(movie).save()

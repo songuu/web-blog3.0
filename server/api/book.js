@@ -9,6 +9,8 @@ router.post('/api/book', confirmToken, (req, res) => {
 			title: req.query.title,
 			writer: req.query.writer,
 			rate: req.query.rate,
+			url: req.query.url,
+			pwd: req.query.pwd,
 			date: Date(),
 		}
 		new db.Book(book).save()
@@ -90,7 +92,7 @@ router.get('/api/somebooks', (req, res) => {
 //获取一本书
 router.get('/api/book/:rid', (req, res) => {
 	db.Book.findOne({
-		rid: req.params.rid
+		rid: req.query.rid
 	}, (err, doc) => {
 		if(err) {
 			return res.send({

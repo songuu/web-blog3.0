@@ -11,7 +11,7 @@
 				<p class="left">QQ:</p>
 				<p class="right">1101309860</p>
 				<p class="left">学校:</p>
-				<p class="right">四川理工学院大三在校生</p>
+				<p class="right">四川理工学院大四在校生</p>
 				<p class="left">在线简历:</p>
 				<a class="right" href="http://www.500d.me/cvresume/edit/?itemid=512&resumeId=4322424">job.songyu.cn</a>
 			</div>

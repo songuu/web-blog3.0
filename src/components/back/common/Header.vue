@@ -6,12 +6,12 @@
 				<span>{{time}}好，{{name}}</span>
 			</p>
 			<p class="btn-bell">
-				<el-tooltip effect="dark" :content="message?`有${ message }条未读消息`:`消息中心`" placement="bottom">
+				<el-tooltip effect="dark" :content="message?`有${ message.length }条未读消息`:`消息中心`" placement="bottom">
 					<router-link to="/notify">
 						<i class="el-icon-bell"></i>
 					</router-link>
 				</el-tooltip>
-				<span class="btn-bell-badge" v-if="message"></span>
+				<span class="btn-bell-badge" v-if="message > 0"></span>
 			</p>
 			<p class="right" @click="logout">
 				<i class="iconfont icon-out"></i>
@@ -30,13 +30,13 @@
 			}
 		},
 		created() {
-			this.getMessageBox()
+			this.getComments()
 		},
 		computed: {
-			...mapState(['user','messageBox']),
+			...mapState(['user','allcomments']),
 			message: {
 				get() {
-					return this.messageBox.length
+					return this.allcomments.filter((item) => (!item.isRead))
 				}
 			},
 			time() {
@@ -56,8 +56,8 @@
 			}
 		},
 		methods: {
-			...mapMutations(['unset_user','set_messageBox']),
-			...mapActions(['getMessageBox']),
+			...mapMutations(['unset_user','set_allcomments']),
+			...mapActions(['getComments']),
 			logout() {
 				this.unset_user()
 				this.$router.go({

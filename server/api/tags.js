@@ -3,13 +3,6 @@ const router = express.Router()
 const db = require('../db/db.js')
 
 router.get('/api/tags', (req, res) => {
-	/*db.Article.find({isPublish: true}).distinct('tags', (err, doc) => {
-	    if (err) {
-	        console.log(err)
-	    } else if (doc) {
-	        res.send(doc)
-	    }
-	})*/
 	db.Article.find({
 		isPublish: true
 	}).then((doc) => {
@@ -22,9 +15,16 @@ router.get('/api/tags', (req, res) => {
 					}
 				}
 			}
-			res.send(arr)
+			return res.send({
+				status: 200,
+				data: arr,
+				msg: 'success'
+			})
 		} else {
-			console.log("error")
+			return res.send({
+				status: 500,
+				msg: 'failed'
+			})
 		}
 	})
 })

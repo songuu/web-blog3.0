@@ -1,21 +1,47 @@
 import axios from '@/lib/api.request'
 
-export const getComments = (session) => {
+export const getAllComments = (payload) => {
 	return axios.request({
-		url: '/api/allcomments',
-		params: {
-			'session': session
-		},
+		url: '/api/comments',
+		params: payload,
 		method: 'get'
 	})
 }
 
-export const getCommentsNum = (session) => {
+export const getComments = () => {
+	return axios.request({
+		url: '/api/allcomments',
+		method: 'get'
+	})
+}
+
+export const getCommentsNum = () => {
 	return axios.request({
 		url: '/api/commetsNum',
-		params: {
-			'session': session
-		},
 		method: 'get'
+	})
+}
+
+export const summitComment = (payload) => {
+	if(payload.date) {
+		return axios.request({
+			url: '/api/commentss',
+			params: payload,
+			method: 'patch'
+		})
+	} else {
+		return axios.request({
+			url: '/api/comment',
+			params: payload,
+			method: 'post'
+		})
+	}
+}
+
+export const updateLike = (payload) => {
+	return axios.request({
+		url: '/api/comments/' + payload.id,
+		params: payload,
+		method: 'patch'
 	})
 }

@@ -33,7 +33,7 @@
 			open(name) {
 				const h = this.$createElement;
 				this.$notify({
-					title: '错误信息',
+					title: '信息',
 					message: h('i', {
 						style: 'color: teal'
 					}, name)
@@ -53,14 +53,19 @@
 					subject: this.subject,
 					email: this.email,
 					content: this.content
-				}).then(() => {
+				}).then((res) => {
+					if(res.status === 200) {
+						this.open('发送成功')
+					} else {
+						this.open('发送失败')
+					}
 					this.subject = ''
 					this.content = ''
 					this.email = ''
 					this.sendFlag = false
 				}).catch(() => {
 					this.sendFlag = false
-					this.open('发送失败')
+					this.open('系统错误')
 				})
 			}
 		}

@@ -41,7 +41,7 @@ router.post('/api/article', confirmToken, (req, res) => {
 	//获取一篇文章
 	router.get('/api/article/:aid', (req, res) => {
 		db.Article.findOne({
-			aid: req.params.aid
+			aid: req.query.aid
 		}, (err, doc) => {
 			if(err) {
 				return res.send({
@@ -57,7 +57,7 @@ router.post('/api/article', confirmToken, (req, res) => {
 		})
 	})
 //获取全部文章
-router.post('/api/articles', confirmToken, (req, res) => {
+router.post('/api/articles', (req, res) => {
 	const page = req.query.page
 	const value = req.query.value
 	const sortname = req.query.sortname
@@ -176,9 +176,9 @@ router.patch('/api/article/:aid', confirmToken, (req, res) => {
 
 // 搜索一些文章
 router.get('/api/someArticles', (req, res) => {
-	const key = req.query.payload.key
-	const value = req.query.payload.value
-	const page = req.query.payload.page || 1
+	const key = req.query.key
+	const value = req.query.value
+	const page = req.query.page || 1
 	const skip = 4 * (page - 1)
 	const re = new RegExp(value, 'i')
 	if(key === 'tags') { // 根据标签来搜索文章
@@ -193,7 +193,11 @@ router.get('/api/someArticles', (req, res) => {
 				date: -1
 			}).limit(4).skip(skip).exec()
 			.then((articles) => {
-				res.send(articles)
+				return res.send({
+					status: 200,
+					data: articles,
+					msg: 'success'
+				})
 			})
 	} else if(key === 'title') { // 根据标题的部分内容来搜索文章
 		db.Article.find({
@@ -204,7 +208,11 @@ router.get('/api/someArticles', (req, res) => {
 				date: -1
 			}).limit(4).skip(skip).exec()
 			.then((articles) => {
-				res.send(articles)
+				return res.send({
+					status: 200,
+					data: articles,
+					msg: 'success'
+				})
 			})
 	} else if(key === 'date') { // 根据日期来搜索文章
 		const nextDay = value + 'T24:00:00'
@@ -219,25 +227,28 @@ router.get('/api/someArticles', (req, res) => {
 				date: -1
 			}).limit(4).skip(skip).exec()
 			.then((articles) => {
-				res.send(articles)
+				return res.send({
+					status: 200,
+					data: articles,
+					msg: 'success'
+				})
 			})
 	}
 })
 //获取全部文章aid
 router.get('/api/aids', (req, res) => {
-	/*db.Article.find({}).distinct('aid', (err, doc) => {
-		if(err) {
-			console.log(err)
-		} else if(doc) {
-			console.log(doc)
-			res.send(doc)
-		}
-	})*/
 	db.Article.find({}).then((doc) => {
 		if(doc) {
-			return res.send(doc)
+			return res.send({
+				status: 200,
+				data: doc,
+				msg: 'success'
+			})
 		} else {
-			console.log('error')
+			return res.send({
+				status: 500,
+				msg: 'failed'
+			})
 		}
 	})
 })

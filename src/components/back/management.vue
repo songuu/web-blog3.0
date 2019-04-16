@@ -203,6 +203,9 @@
 			commentUsers() {
 				let result = this.unique(this.allcomments);
 				return result.length
+			},
+			messageBox() {
+				return this.allcomments.filter((item) => (!item.isRead))
 			}
 		},
 		created() {
@@ -213,7 +216,7 @@
 			})
 			this.getCommentsNum()
 			this.getComments()
-			this.getMessageBox()
+			this.getComments()
 			this.getDate()
 			this.getposition()
 			//console.log(this.todoItem)
@@ -221,7 +224,7 @@
 		},
 		methods: {
 			...mapMutations(['set_deal', 'set_plan']),
-			...mapActions(['getAllplans', 'savePlan', 'delPlan', 'getCommentsNum', 'getComments', 'getMessageBox']),
+			...mapActions(['getAllplans', 'savePlan', 'delPlan', 'getCommentsNum', 'getComments', 'getComments']),
 			gettodoList(limit) {
 				this.getAllplans(limit)
 			},
@@ -230,15 +233,15 @@
 				let year = d.getFullYear();
 				let month = d.getMonth() + 1;
 				let day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate();
-				let hour = d.getHours() < 10 ? '0' +d.getHours() : '' + d.getHours();
-				let minute = d.getMinutes() <10 ? '0' + d.getMinutes() : '' + d.getMinutes();
-				let second = d.getSeconds() < 10 ? '0' +d.getSeconds() : '' + d.getSeconds();
-				this.date = year + '-' + month + '-' + day+ " " + hour + ':' + minute + ':' + second;
+				let hour = d.getHours() < 10 ? '0' + d.getHours() : '' + d.getHours();
+				let minute = d.getMinutes() < 10 ? '0' + d.getMinutes() : '' + d.getMinutes();
+				let second = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
+				this.date = year + '-' + month + '-' + day + " " + hour + ':' + minute + ':' + second;
 			},
 			getposition() {
-				try{
+				try {
 					this.position = returnCitySN["cname"]
-				}catch (err){
+				} catch(err) {
 					this.position = ''
 				}
 			},
@@ -276,7 +279,7 @@
 				//console.log(this.todoList[this.idx].id)
 				this.delVisible = true;
 			},
-			deleteRow() {			
+			deleteRow() {
 				try {
 					this.delPlan({
 						id: this.todoList[this.idx].id,

@@ -35,7 +35,7 @@ const CommonFile = resolve => require(['@/components/back/commonFile'], resolve)
 Vue.use(Router)
 
 const router = new Router({
-	mode: 'history',
+	mode: 'hash',
 	saveScrollPosition: true, // 指定能够恢复到上一次进来的位置   但是在vue2中间已经取消   但是可以指定允许使用  saveScrollPosition: true
 	scrollBehavior(to, from, savedPosition) {
 		if(to.hash) {
@@ -267,11 +267,11 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 	document.title = to.meta.title
-	if(Store.state.user.token && to.name === 'login') {
+	if(Store.state.session && to.name === 'login') {
 		next({
 			name: 'admin'
 		})
-	} else if(!Store.state.user.token && to.meta.requireAuth) {
+	} else if(!Store.state.session && to.meta.requireAuth) {
 		next({
 			name: 'login'
 		})

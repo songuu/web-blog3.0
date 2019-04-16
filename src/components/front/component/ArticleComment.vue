@@ -60,7 +60,7 @@
 			this.getAllComments({
 				id: this.$route.params.id
 			})
-			if(localStorage.token && this.user.name) {
+			if(this.session && this.user.name) {
 
 				this.imgName = 'myself'
 			} else {
@@ -85,7 +85,7 @@
 			},
 		},
 		computed: {
-			...mapState(['comments', 'user']),
+			...mapState(['comments', 'user', 'session']),
 			likeArr() { // 访问者点赞了哪些评论的数组
 				if(localStorage.getItem(this.$route.params.id)) {
 					const item = localStorage.getItem(this.$route.params.id) // 初始化访问者的点赞情况
@@ -99,7 +99,7 @@
 			open(name) {
 				const h = this.$createElement;
 				this.$notify({
-					title: '错误信息',
+					title: '信息',
 					message: h('i', {
 						style: 'color: teal'
 					}, name)
@@ -141,14 +141,21 @@
 					address: this.address,
 					articleId: this.$route.params.id,
 					curPath: this.$route.fullPath
-				}).then(() => {
-					this.content = ''
-					this.summitFlag = false
-					this.getAllComments({
-						id: this.$route.params.id
-					})
+				}).then((res) => {
+					if(res.status === 200) {
+						this.open('留言成功')
+						this.content = ''
+						this.summitFlag = false
+						this.getAllComments({
+							id: this.$route.params.id
+						})
+					} else {
+						this.open('留言失败')
+						this.summitFlag = false
+						this.name = ''
+					}
 				}).catch((err) => {
-					console.log(err)
+					this.open('系统错误')
 					this.summitFlag = false
 					this.name = ''
 				})
@@ -163,27 +170,39 @@
 					this.updateLike({
 						id: id,
 						option: 'add'
-					}).then(() => {
-						this.likeArr.push(index)
-						this.getAllComments({
-							id: this.$route.params.id
-						})
-						localStorage[this.$route.params.id] = JSON.stringify(this.likeArr) // 记录访问者的点赞情况
+					}).then((res) => {
+						if(res.status === 200) {
+							this.open('点赞成功')
+							this.likeArr.push(index)
+							this.getAllComments({
+								id: this.$route.params.id
+							})
+							localStorage[this.$route.params.id] = JSON.stringify(this.likeArr) // 记录访问者的点赞情况
+						} else {
+							this.open('点赞失败')
+						}
+
 					}).catch((err) => {
-						console.log(err)
+						this.open('系统错误')
 					})
 				} else {
 					this.updateLike({
 						id: id,
 						option: 'drop'
-					}).then(() => {
-						this.likeArr.splice(i, 1)
-						this.getAllComments({
-							id: this.$route.params.id
-						})
-						localStorage[this.$route.params.id] = JSON.stringify(this.likeArr) // 记录访问者的点赞情况
+					}).then((res) => {
+						if(res.status === 200) {
+							this.open('别取消啊')
+							this.likeArr.splice(i, 1)
+							this.getAllComments({
+								id: this.$route.params.id
+							})
+							localStorage[this.$route.params.id] = JSON.stringify(this.likeArr) // 记录访问者的点赞情况
+						} else {
+							this.open('取消失败')
+						}
+
 					}).catch((err) => {
-						console.log(err)
+						this.open('系统错误')
 					})
 				}
 			}

@@ -1,7 +1,6 @@
 import axios from '@/lib/api.request'
 
-export const getAllbooks = (session, payload) => {
-	payload.session = session
+export const getAllbooks = (payload) => {
 	return axios.request({
 		url: '/api/books',
 		params: payload,
@@ -9,10 +8,17 @@ export const getAllbooks = (session, payload) => {
 	})
 }
 
-export const getNewbooks = (session, payload) => {
-	payload.session = session
+export const getNewbooks = (payload) => {
 	return axios.request({
 		url: '/api/books',
+		params: payload,
+		method: 'get'
+	})
+}
+
+export const searchBooks = (payload) => {
+	return axios.request({
+		url: '/api/somebooks',
 		params: payload,
 		method: 'get'
 	})
@@ -46,8 +52,17 @@ export const delBook = (session, rid) => {
 	})
 }
 
-export const getAllmusics = (session, payload) => {
-	payload.session = session
+export const getBook = (rid) => {
+	return axios.request({
+		url: '/api/book/' + rid,
+		params: {
+			'rid': rid
+		},
+		method: 'get'
+	})
+}
+
+export const getAllmusics = (payload) => {
 	return axios.request({
 		url: '/api/musics',
 		params: payload,
@@ -55,10 +70,17 @@ export const getAllmusics = (session, payload) => {
 	})
 }
 
-export const getNewmusics = (session, payload) => {
-	payload.session = session
+export const getNewmusics = (payload) => {
 	return axios.request({
 		url: '/api/musics',
+		params: payload,
+		method: 'get'
+	})
+}
+
+export const searchMusics = (payload) => {
+	return axios.request({
+		url: '/api/somemusics',
 		params: payload,
 		method: 'get'
 	})
@@ -92,8 +114,17 @@ export const delMusic = (session, bid) => {
 	})
 }
 
-export const getAllmovies = (session, payload) => {
-	payload.session = session
+export const getMusic = (bid) => {
+	return axios.request({
+		url: '/api/music/' + bid,
+		params: {
+			'bid': bid
+		},
+		method: 'get'
+	})
+}
+
+export const getAllmovies = (payload) => {
 	return axios.request({
 		url: '/api/movies',
 		params: payload,
@@ -101,10 +132,17 @@ export const getAllmovies = (session, payload) => {
 	})
 }
 
-export const getNewmovies = (session, payload) => {
-	payload.session = session
+export const getNewmovies = (payload) => {
 	return axios.request({
 		url: '/api/movies',
+		params: payload,
+		method: 'get'
+	})
+}
+
+export const searchMovies = (payload) => {
+	return axios.request({
+		url: '/api/somemovies',
 		params: payload,
 		method: 'get'
 	})
@@ -135,5 +173,15 @@ export const delMovie = (session, cid) => {
 			'cid': cid
 		},
 		method: 'delete'
+	})
+}
+
+export const getMovie = (cid) => {
+	return axios.request({
+		url: '/api/movie/' + cid,
+		params: {
+			'cid': cid
+		},
+		method: 'get'
 	})
 }

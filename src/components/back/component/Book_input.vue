@@ -174,7 +174,6 @@
 					url: this.bookItem.url,
 					pwd: this.bookItem.pwd
 				})
-				//console.log(this.book.rate)
 				this.saveBook()
 				this.addVisible = false
 				this.$message.success('添加成功');

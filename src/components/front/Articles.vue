@@ -173,9 +173,6 @@
 			commentsNum() {
 				return this.sum(this.commentNum)
 			}
-			/*			articlesBox() {
-							return this.articles
-						}*/
 		},
 		beforeUpdate() { //刷新页面
 			if(this.curTag) {

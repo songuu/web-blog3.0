@@ -2,11 +2,11 @@ import Vue from 'vue'
 import router from '../router'
 
 import { login, logout, resetUser } from '@/api/user'
-import { getAllArticles, saveArticle, delArticle, getArticle } from '@/api/article'
-import { getMessageBox } from '@/api/common'
-import { getComments, getCommentsNum } from '@/api/comment'
+import { getAllArticles, saveArticle, delArticle, getArticle, searchArticles, getAllaids } from '@/api/article'
+import { sendMail, getAllTags, updateMessage } from '@/api/common'
+import { getComments, getCommentsNum, summitComment, updateLike, getAllComments } from '@/api/comment'
 import { getAllplans, delPlan, savePlan } from '@/api/plan'
-import { getAllbooks, getAllmusics, getAllmovies, saveBook, saveMusic, saveMovie, delBook, delMusic, delMovie } from '@/api/resource'
+import { getAllbooks, getAllmusics, getAllmovies, saveBook, saveMusic, saveMovie, delBook, delMusic, delMovie, getNewbooks, getNewmovies, getNewmusics, getBook, getMusic, getMovie, searchBooks, searchMovies, searchMusics } from '@/api/resource'
 
 const beginLoading = (commit, add) => {
 	add ? commit('loadMore_toggle', true) : commit('isLoading_toggle', true)
@@ -52,7 +52,7 @@ export default {
 	sendMail({
 		commit
 	}, payload) {
-		return Vue.http.post('/api/mail', payload).catch((err) => {
+		return sendMail(payload).catch((err) => {
 			console.log(err)
 		})
 	},
@@ -74,7 +74,6 @@ export default {
 		})
 	},
 	getAllArticles({
-		state,
 		commit
 	}, payload) {
 		commit('moreArticle_toggle', true)
@@ -82,7 +81,7 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		getAllArticles(state.session, payload).then((res) => {
+		getAllArticles(payload).then((res) => {
 			if(res.status === 200) {
 				if(res.data.length === 0) {
 					commit('moreArticle_toggle', false)
@@ -106,7 +105,7 @@ export default {
 		commit,
 		state
 	}, aid) {
-		getArticle(state.session, aid).then((res) => {
+		getArticle(aid).then((res) => {
 			if(res.status === 200) {
 				commit('set_article', res.data)
 				document.title = state.article.title
@@ -142,39 +141,38 @@ export default {
 	}, payload) {
 		commit('moreArticle_toggle', true)
 		const startTime = beginLoading(commit, payload.add)
-		return Vue.http.get('/api/someArticles', {
-				params: {
-					payload
-				}
-			})
-			.then(response => response.json())
-			.then(articles => {
-				if(articles.length === 0) {
+		searchArticles(payload).then((res) => {
+			if(res.status === 200) {
+				if(res.data.length === 0) {
 					commit('moreArticle_toggle', false)
 					commit('noMore_toggle', true)
 				} else {
 					commit('noMore_toggle', false)
 				}
 				if(payload.add) {
-					commit('add_articles', articles)
+					commit('add_articles', res.data)
 					endLoading(commit, startTime, 'loadMore_toggle')
 				} else {
-					commit('set_all_articles', articles)
+					commit('set_all_articles', res.data)
 					endLoading(commit, startTime, 'isLoading_toggle')
 				}
-			}).catch((err) => {
-				console.log(err)
-			})
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
 	},
 	getAllaids({
 		commit
 	}) {
-		return Vue.http.get('/api/aids')
-			.then(response => {
-				commit('set_aids', response.data)
-			}).catch((err) => {
-				console.log(err)
-			})
+		getAllaids().then((res) => {
+			if(res.status === 200) {
+				commit('set_aids', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
 	},
 	//计划的请求
 	savePlan({
@@ -261,7 +259,6 @@ export default {
 		})
 	},
 	getNewbooks({
-		state,
 		commit
 	}, payload) {
 		commit('moreBook_toggle', true)
@@ -269,7 +266,7 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		getNewbooks(state.session, payload).then((res) => {
+		getNewbooks(payload).then((res) => {
 			if(res.status === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
@@ -285,7 +282,6 @@ export default {
 		})
 	},
 	getAllmusics({
-		state,
 		commit
 	}, payload) {
 		commit('moreMusic_toggle', true)
@@ -293,7 +289,7 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		getAllmusics(state.session, payload).then((res) => {
+		getAllmusics(payload).then((res) => {
 			if(res.status === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
@@ -309,7 +305,6 @@ export default {
 		})
 	},
 	getNewmusics({
-		state,
 		commit
 	}, payload) {
 		commit('moreMusic_toggle', true)
@@ -317,7 +312,7 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		getNewmusics(state.session, payload).then((res) => {
+		getNewmusics(payload).then((res) => {
 			if(res.status === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
@@ -333,7 +328,6 @@ export default {
 		})
 	},
 	getAllmovies({
-		state,
 		commit
 	}, payload) {
 		commit('moreMovie_toggle', true)
@@ -341,7 +335,7 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		getAllmovies(state.session, payload).then((res) => {
+		getAllmovies(payload).then((res) => {
 			if(res.status === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
@@ -357,7 +351,6 @@ export default {
 		})
 	},
 	getNewmovies({
-		state,
 		commit
 	}, payload) {
 		commit('moreMovie_toggle', true)
@@ -365,7 +358,7 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		getNewmovies(state.session, payload).then((res) => {
+		getNewmovies(payload).then((res) => {
 			if(res.status === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
@@ -493,22 +486,20 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		return Vue.http.get('/api/somebooks', {
-				params: {
-					payload
-				}
-			})
-			.then(response => response.json())
-			.then(books => {
+		searchBooks(payload).then((res) => {
+			if(res.stutas === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
 				} else {
-					commit('set_all_books', books)
+					commit('set_all_books', res.data)
 					endLoading(commit, startTime, 'isLoading_toggle')
 				}
-			}).catch((err) => {
-				console.log(err)
-			})
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
 	},
 	searchMusics({
 		commit
@@ -518,22 +509,20 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		return Vue.http.get('/api/somemusics', {
-				params: {
-					payload
-				}
-			})
-			.then(response => response.json())
-			.then(musics => {
+		searchMusics(payload).then((res) => {
+			if(res.status === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
 				} else {
-					commit('set_all_musics', musics)
+					commit('set_all_musics', res.data)
 					endLoading(commit, startTime, 'isLoading_toggle')
 				}
-			}).catch((err) => {
-				console.log(err)
-			})
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
 	},
 	searchMovies({
 		commit
@@ -543,64 +532,14 @@ export default {
 		if(payload.value) {
 			commit('isLoading_toggle', false)
 		}
-		return Vue.http.get('/api/somemovies', {
-				params: {
-					payload
-				}
-			})
-			.then(response => response.json())
-			.then(movies => {
+		searchMovies(payload).then((res) => {
+			if(res.status === 200) {
 				if(payload.add) {
 					endLoading(commit, startTime, 'loadMore_toggle')
 				} else {
-					commit('set_all_movies', movies)
+					commit('set_all_movies', res.data)
 					endLoading(commit, startTime, 'isLoading_toggle')
 				}
-			}).catch((err) => {
-				console.log(err)
-			})
-	},
-	getBook({
-		commit,
-		state
-	}, rid) {
-		return Vue.http.get('/api/book/' + rid)
-			.then(response => {
-				commit('set_book', response.data)
-			}).catch((err) => {
-				console.log(err)
-			})
-	},
-	getMusic({
-		commit,
-		state
-	}, bid) {
-		return Vue.http.get('/api/music/' + bid)
-			.then(response => {
-				commit('set_music', response.data)
-			}).catch((err) => {
-				console.log(err)
-			})
-	},
-	getMovie({
-		commit,
-		state
-	}, cid) {
-		return Vue.http.get('/api/movie/' + cid)
-			.then(response => {
-				commit('set_movie', response.data)
-			}).catch((err) => {
-				console.log(err)
-			})
-	},
-	//消息的获取
-	getMessageBox({
-		commit,
-		state
-	}) {
-		getMessageBox(state.session).then((res) => {
-			if(res.status === 200) {
-				commit('set_messageBox', res.data)
 			} else {
 				console.log('获取失败')
 			}
@@ -608,23 +547,72 @@ export default {
 			console.log(err)
 		})
 	},
+	getBook({
+		commit,
+		state
+	}, rid) {
+		getBook(rid).then((res) => {
+			if(res.status === 200) {
+				commit('set_book', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	getMusic({
+		commit,
+		state
+	}, bid) {
+		getMusic(bid).then((res) => {
+			if(res.status === 200) {
+				commit('set_music', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	getMovie({
+		commit,
+		state
+	}, cid) {
+		getMovie(cid).then((res) => {
+			if(res.status === 200) {
+				commit('set_movie', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	
+	//更新消息的阅读状态
+	updateMessage({}, payload) {
+		return updateMessage(payload)
+	},
 
 	//tags
 	getAllTags({
 		commit
 	}) {
-		return Vue.http.get('/api/tags')
-			.then(response => {
-				commit('set_tags', response.data)
-			}).catch((err) => {
-				console.log(err)
-			})
+		getAllTags().then((res) => {
+			if(res.status === 200) {
+				commit('set_tags', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
 	},
 	getCommentsNum({
-		state,
 		commit
 	}) {
-		getCommentsNum(state.session).then((res) => {
+		getCommentsNum().then((res) => {
 			if(res.status === 200) {
 				commit('set_commentNum', res.data)
 			} else {
@@ -636,32 +624,28 @@ export default {
 	summitComment({
 		commit
 	}, payload) {
-		if(payload.date) {
-			return Vue.http.patch('/api/commentss/', payload)
-		} else {
-			return Vue.http.post('/api/comment', payload)
-		}
+		return summitComment(payload).catch((err) => {
+			console.log(err)
+		})
 	},
 	getAllComments({
 		commit
 	}, payload) {
-		return Vue.http.get('/api/comments', {
-				params: {
-					payload
-				}
-			})
-			.then(response => response.json())
-			.then(comments => {
-				commit('set_comments', comments)
-			}).catch((err) => {
-				console.log(err)
-			})
+		getAllComments(payload).then((res) => {
+			if(res.status === 200) {
+				commit('set_comments', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
 	},
 	getComments({
 		commit,
 		state
 	}) {
-		getComments(state.session).then((res) => {
+		getComments().then((res) => {
 			if(res.status === 200) {
 				commit('set_allcomments', res.data)
 			} else {
@@ -674,12 +658,9 @@ export default {
 	updateLike({
 		commit
 	}, payload) {
-		return Vue.http.patch('/api/comments/' + payload.id, {
-				option: payload.option
-			})
-			.catch((err) => {
-				console.log(err)
-			})
+		return updateLike(payload).catch((err) => {
+			console.log(err)
+		})
 	},
 	getAllFiles({
 		commit

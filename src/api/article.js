@@ -19,8 +19,7 @@ export const saveArticle = (session, aid, article) => {
 }
 
 //获取所有的文章
-export const getAllArticles = (session,payload) => {
-	payload.session = session
+export const getAllArticles = (payload) => {
 	return axios.request({
 		url: '/api/articles',
 		params: payload,
@@ -29,11 +28,10 @@ export const getAllArticles = (session,payload) => {
 }
 
 //获取单个的文章
-export const getArticle = (session, aid) => {
+export const getArticle = (aid) => {
 	return axios.request({
 		url: '/api/article/' + aid,
 		params: {
-			'session': session,
 			'aid': aid
 		},
 		method: 'get'
@@ -53,6 +51,17 @@ export const delArticle = (session, aid) => {
 }
 
 //搜索文章
-export const searchArticles = () => {
+export const searchArticles = (payload) => {
+	return axios.request({
+		url: '/api/someArticles',
+		params: payload,
+		method: 'get'
+	})
+}
 
+export const getAllaids = () => {
+	return axios.request({
+		url: '/api/aids',
+		method: 'get'
+	})
 }
