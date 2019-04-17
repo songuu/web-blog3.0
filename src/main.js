@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-import { Input, Select, Button, Icon, Tabs, TabPane, ButtonGroup, Breadcrumb, BreadcrumbItem,Checkbox,MenuItem, Submenu, ColorPicker, Pagination, Popover, Table, Menu, Tooltip, Tag, Dialog, Row, Form, FormItem, DatePicker, Card, Col, Option, TableColumn, MessageBox, Message, Notification} from 'element-ui'
+import { Input, Select, Button, Icon, Tabs, TabPane, ButtonGroup, Breadcrumb, BreadcrumbItem,Checkbox,MenuItem, Submenu, ColorPicker, Pagination, Popover, Table, Menu, Tooltip, Tag, Dialog, Row, Form, FormItem, DatePicker, Card, Col, Option, TableColumn, MessageBox, Message, Notification, Timeline, TimelineItem} from 'element-ui'
 Vue.component(Button.name, Button);
 Vue.component(Select.name, Select);
 Vue.component(Input.name, Input);
@@ -35,6 +35,8 @@ Vue.component(ColorPicker.name, ColorPicker);
 Vue.component(Submenu.name, Submenu);
 Vue.component(TableColumn.name, TableColumn);
 Vue.component(ButtonGroup.name, ButtonGroup);
+Vue.component(Timeline.name, Timeline)
+Vue.component(TimelineItem.name, TimelineItem)
 
 Vue.config.productionTip = false
 

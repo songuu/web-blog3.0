@@ -12,8 +12,8 @@
 					<el-menu-item index="/blog">
 						博客
 					</el-menu-item>
-					<el-menu-item index="/life">
-						生活
+					<el-menu-item index="/archives">
+						档案
 					</el-menu-item>
 					<el-submenu index="3">
 						<template slot="title">{{title}}</template>

@@ -4,6 +4,7 @@ import axios from '@/lib/api.request'
 export const saveArticle = (session, aid, article) => {
 	article.session = session
 	if(aid) {
+		article.aid = aid
 		return axios.request({
 			url: '/api/article/' + aid,
 			params: article,

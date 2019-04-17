@@ -137,5 +137,12 @@ export default {
 	},
 	set_all_files: (state, files) => {
 		state.files = files
+	},
+	//设置档案
+	set_archives: (state, archives) => {
+		state.archives = archives
+	},
+	set_archNum: (state, archNum) => {
+		state.archNum = archNum
 	}
 }

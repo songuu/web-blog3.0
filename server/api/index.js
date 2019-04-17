@@ -10,6 +10,7 @@ const movie = require('./movie.js')
 const tags = require('./tags.js')
 const img = require('./img.js')
 const common = require('./commonFile.js')
+const archive = require('./archive.js')
 
 module.exports = (app) => {
 	app.use(login)
@@ -17,6 +18,7 @@ module.exports = (app) => {
 	app.use(user)
 	app.use(comment)
 	app.use(article)
+	app.use(archive)
 	app.use(tags)
 	app.use(plan)
 	app.use(book)

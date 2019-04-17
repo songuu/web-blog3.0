@@ -313,9 +313,7 @@
 	#Blog {
 		width: 100%;
 		.Blog-box {
-			width: 94%;
-			margin: 1rem 0;
-			height: 33.5rem;
+			height: 34rem;
 			display: inline-block;
 			display: flex;
 			overflow: hidden;
@@ -383,7 +381,7 @@
 			.right {
 				overflow: hidden;
 				position: relative;
-				height: 34.5rem;
+				height: 34rem;
 				h2 {
 					text-align: center;
 					color: #000000;
@@ -515,7 +513,7 @@
 				.block {
 					position: absolute;
 					overflow: hidden;
-					bottom: 15px;
+					bottom: 5px;
 					right: 0rem;
 				}
 			}

@@ -5,9 +5,12 @@
 }
 
 @font-face {
-    font-family: 'iconfont';
-    src: url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.eot');
-    src: url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.woff') format('woff'), url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.ttf') format('truetype'), url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.svg#iconfont') format('svg')
+  font-family: 'iconfont';  /* project id 618179 */
+  src: url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.eot');
+  src: url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.woff') format('woff'),
+  url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_618179_roqhyykcs3xcrf6r.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -128,4 +131,8 @@
 
 .icon-mulu:before {
     content: "\e638"
+}
+
+.icon-lianjie:before {
+    content: "\e677";
 }

@@ -18,7 +18,6 @@ const emailForm = (title, name, otherName, message, content, url) => {
 
 // 发布评论并通知站长和评论者
 router.post('/api/comment', (req, res) => {
-	console.log(req.query)
 	db.Comment.findOne({
 		name: req.query.name,
 		articleId: req.query.articleId

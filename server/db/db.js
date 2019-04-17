@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const data = require('./mock/data')
+const archive = require('./mock/archive')
 const plan = require('./mock/plan')
 const book = require('./mock/book')
 const music = require('./mock/music')
@@ -14,6 +15,21 @@ const UserSchema = new Schema({
 	password: String,
 	salt: String // 使用csprng随机生成的盐
 }, {
+	versionKey: false
+})
+
+const ArchiveSchema = new Schema({
+	hid: {
+		type: Number,
+		index: {
+			unique: true
+		}
+	},
+	title: String,
+	date: Date,
+	articleId: Number,
+	type: String
+},{
 	versionKey: false
 })
 
@@ -133,6 +149,20 @@ ArticleSchema.pre('save', function(next) {
 		next();
 	}
 })
+ArchiveSchema.pre('save', function(next) {
+	var self = this;
+	if(self.isNew) {
+		Sequence.increment('Archive', function(err, result) {
+			if(err) {
+				throw err
+			}
+			self.hid = result.value.next;
+			next();
+		})
+	} else {
+		next();
+	}
+})
 PlanSchema.pre('save', function(next) {
 	var self = this;
 	if(self.isNew) {
@@ -208,7 +238,8 @@ const Models = {
 	Book: mongoose.model('Book', BookSchema),
 	Music: mongoose.model('Music', MusicSchema),
 	Movie: mongoose.model('Movie', MovieSchema),
-	Common: mongoose.model('Common', CommonSchema)
+	Common: mongoose.model('Common', CommonSchema),
+	Archive: mongoose.model('Archive', ArchiveSchema)
 }
 
 // 初始化数据
@@ -242,6 +273,9 @@ const initialize = () => {
 						}),
 						movie.map((item) => {
 							new Models['Movie'](item).save()
+						}),
+						archive.map((item) => {
+							new Models['Archive'](item).save()
 						})
 					]
 				).then(() => {

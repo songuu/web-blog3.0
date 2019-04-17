@@ -18,7 +18,7 @@
 				<el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
 			</div>
 			<mavon-editor v-model="Vcontent" ref="md" @imgAdd="$imgAdd" @change="change" style="min-height: 600px" />
-			<el-button class="editor-btn" type="primary" @click="saveArticle($route.query.aid);isSaving = true">提交</el-button>
+			<el-button class="editor-btn" type="primary" @click="save($route.query.aid);isSaving = true">提交</el-button>
 		</div>
 		<el-dialog title="提示" :visible.sync="addVisible" width="300px" center>
 			<div class="add-dialog-cnt">类型不可以重复</div>
@@ -143,6 +143,16 @@
 					}).then((url) => {
 						this.$refs.md.$img2Url(pos, 'http://' + res.data.domain + '/' + url.data.key);
 					})
+				})
+			},
+			save(id) {
+				this.saveArticle(id).then((res) => {
+					if(res.status === 200) {
+						this.isSaving_ctl(true)
+						this.$router.push({name: 'essay'})
+					} else {
+						console.log('获取失败')
+					}
 				})
 			},
 			change(value, render) { // render 为 markdown 解析后的结果

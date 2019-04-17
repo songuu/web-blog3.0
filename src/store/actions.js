@@ -3,7 +3,7 @@ import router from '../router'
 
 import { login, logout, resetUser } from '@/api/user'
 import { getAllArticles, saveArticle, delArticle, getArticle, searchArticles, getAllaids } from '@/api/article'
-import { sendMail, getAllTags, updateMessage } from '@/api/common'
+import { sendMail, getAllTags, updateMessage, getArchives, getArchNum, getArtId } from '@/api/common'
 import { getComments, getCommentsNum, summitComment, updateLike, getAllComments } from '@/api/comment'
 import { getAllplans, delPlan, savePlan } from '@/api/plan'
 import { getAllbooks, getAllmusics, getAllmovies, saveBook, saveMusic, saveMovie, delBook, delMusic, delMovie, getNewbooks, getNewmovies, getNewmusics, getBook, getMusic, getMovie, searchBooks, searchMovies, searchMusics } from '@/api/resource'
@@ -62,15 +62,8 @@ export default {
 		commit
 	}, aid) {
 		//commit('isSaving_ctl', false)
-		saveArticle(state.session, aid, state.article).then((res) => {
-			if(res.status === 200) {
-				commit('isSaving_ctl', true)
-				router.push({
-					name: 'essay'
-				})
-			} else {
-				alert('保存失败')
-			}
+		return saveArticle(state.session, aid, state.article).catch((err) => {
+			console.log(err)
 		})
 	},
 	getAllArticles({
@@ -589,7 +582,7 @@ export default {
 			console.log(err)
 		})
 	},
-	
+
 	//更新消息的阅读状态
 	updateMessage({}, payload) {
 		return updateMessage(payload)
@@ -681,4 +674,35 @@ export default {
 				console.log(err)
 			})
 	},
+	getArchives({
+		commit
+	}, payload) {
+		return getArchives(payload).then((res) => {
+			if(res.status === 200) {
+				commit('set_archives', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	getArchNum({
+		commit
+	}) {
+		return getArchNum().then((res) => {
+			if(res.status === 200) {
+				commit('set_archNum', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	getArtId({}, payload) {
+		return getArtId(payload).catch((err) => {
+			console.log(err)
+		})
+	}
 }

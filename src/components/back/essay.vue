@@ -162,15 +162,15 @@
 			},
 			delAll() {
 				const length = this.multipleSelection.length;
-				
+
 				this.delVisible = true;
 				for(let i = 0; i < length; i++) {
 					try {
 						if(this.delArticle({
-							aid: this.del_list[i].aid,
-							page: this.cur_page,
-							route: this.$route
-						})) {
+								aid: this.del_list[i].aid,
+								page: this.cur_page,
+								route: this.$route
+							})) {
 							this.del_list = this.del_list.concat(this.multipleSelection);
 						} else {
 							this.$message.info('删除失败')
@@ -253,23 +253,21 @@
 				//设置更新的文章							
 				//数据设置												
 				try {
-					if(this.delArticle({
-							aid: this.articles[this.idx].aid,
-							page: this.cur_page,
-							route: this.$route
-						})) {
-						this.set_article({
-							content: content,
-							title: title,
-							tags: tags,
-							date: date,
-							imgUrl: imgUrl
-						})
-						this.saveArticle(this.article.aid)
-					} else {
-						this.$message.error('修改失败')
-					}
-
+					this.set_article({
+						content: content,
+						title: title,
+						tags: tags,
+						date: date,
+						imgUrl: imgUrl
+					})
+					this.saveArticle(this.articles[this.idx].aid).then((res) => {
+						if(res.status === 200) {
+							this.getData(this.cur_page, 5)
+						} else {
+							console.log('获取失败')
+						}
+					})
+					
 				} catch(err) {
 					console.log('error')
 				}

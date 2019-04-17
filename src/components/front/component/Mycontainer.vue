@@ -1,19 +1,19 @@
 <template>
- <div id="box">
- 	<div class="container">
-	    <router-view v-show="isshow"></router-view>
-    </div>
- </div>
+	<div id="box">
+		<div class="container">
+			<router-view v-show="isshow"></router-view>
+		</div>
+	</div>
 </template>
 <script>
-import slider from 'vue-concise-slider'
-export default {
-   data () {
-      return {
-      		isshow: true,
-      	}
-    }
-}
+	import slider from 'vue-concise-slider'
+	export default {
+		data() {
+			return {
+				isshow: true,
+			}
+		}
+	}
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
 	#box {

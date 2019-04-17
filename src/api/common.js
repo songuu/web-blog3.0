@@ -22,3 +22,26 @@ export const getAllTags = () => {
 		method: 'get'
 	})
 }
+
+export const getArchives = (payload) => {
+	return axios.request({
+		url: '/api/archives',
+		params: payload,
+		method: 'get'
+	})
+}
+
+export const getArchNum = () => {
+	return axios.request({
+		url: '/api/hids',
+		method: 'get'
+	})
+}
+
+export const getArtId = (payload) => {
+	return axios.request({
+		url: '/api/artId',
+		params: payload,
+		method: 'get'
+	})
+}

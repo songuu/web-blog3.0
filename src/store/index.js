@@ -22,6 +22,8 @@ const store = new Vuex.Store({
 		aids: [],
 		todoList: [],
 		todoItem: {},
+		archives: [],
+		archNum: 0, 
 		dialog: {
 			isUpdate: false,
             resolveFn: () => {},

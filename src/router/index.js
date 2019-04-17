@@ -5,7 +5,7 @@ import Store from '../store'
 const Test = resolve => require(['@/components/test4'], resolve)
 
 const Index = resolve => require(['@/components/front/index'], resolve)
-const Life = resolve => require(['@/components/front/Life'], resolve)
+const Archives = resolve => require(['@/components/front/Archives'], resolve)
 const Blog = resolve => require(['@/components/front/Articles'], resolve)
 const article = resolve => require(['@/components/front/article'], resolve)
 const Resource = resolve => require(['@/components/front/Resource'], resolve)
@@ -71,9 +71,9 @@ const router = new Router({
 					}
 				},
 				{
-					path: 'life',
-					name: 'life',
-					component: Life,
+					path: 'archives',
+					name: 'archives',
+					component: Archives,
 					meta: {
 						title: '生活'
 					}
