@@ -179,26 +179,6 @@
 				}
 			}
 		},
-/*		watch() {
-			document.body.oncopy = event => {
-				event.preventDefault(); // 取消默认的复制事件 
-				let textFont, copyFont = window.getSelection(0).toString(); // 被复制的文字 等下插入
-				// 防知乎掘金 复制一两个字则不添加版权信息 超过一定长度的文字 就添加版权信息
-				if(copyFont.length > 10) {
-					textFont = copyFont + '\n' +
-						'作者：songyu\n' +
-						'来源：宋钰的博客\n'；
-				} else {
-					textFont = copyFont; // 没超过十个字 则采用被复制的内容。
-				}
-				if(event.clipboardData) {
-					return event.clipboardData.setData('text', textFont); // 将信息写入粘贴板
-				} else {
-					// 兼容IE
-					return window.clipboardData.setData("text", textFont);
-				}
-			}
-		},*/
 		components: {
 			ArticleComment,
 			ArticleList

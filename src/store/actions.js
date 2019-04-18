@@ -3,7 +3,7 @@ import router from '../router'
 
 import { login, logout, resetUser } from '@/api/user'
 import { getAllArticles, saveArticle, delArticle, getArticle, searchArticles, getAllaids } from '@/api/article'
-import { sendMail, getAllTags, updateMessage, getArchives, getArchNum, getArtId } from '@/api/common'
+import { sendMail, getAllTags, updateMessage, getArchives, getArchNum } from '@/api/common'
 import { getComments, getCommentsNum, summitComment, updateLike, getAllComments } from '@/api/comment'
 import { getAllplans, delPlan, savePlan } from '@/api/plan'
 import { getAllbooks, getAllmusics, getAllmovies, saveBook, saveMusic, saveMovie, delBook, delMusic, delMovie, getNewbooks, getNewmovies, getNewmusics, getBook, getMusic, getMovie, searchBooks, searchMovies, searchMusics } from '@/api/resource'
@@ -697,11 +697,6 @@ export default {
 				console.log('获取失败')
 			}
 		}).catch((err) => {
-			console.log(err)
-		})
-	},
-	getArtId({}, payload) {
-		return getArtId(payload).catch((err) => {
 			console.log(err)
 		})
 	}

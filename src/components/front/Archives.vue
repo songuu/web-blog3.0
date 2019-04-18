@@ -5,7 +5,10 @@
 				<el-timeline-item v-for="(item, index) in archives" :color="item.type === 'personal' ? '#0bbd87': ''" :key="index" :timestamp="item.date | toDate" placement="top">
 					<el-card>
 						<h4>上传文章</h4>
-						<p @click="gotoArc(item.title, item.date)">{{item.title}}</p>
+						<!--<p @click="gotoArc(item.aid)">{{item.title}}</p>-->
+						<router-link :to="{name: 'article', params: {id: item.aid,index: index,page: page}}" tag="p" exact>
+							{{item.title}}
+						</router-link>
 					</el-card>
 				</el-timeline-item>
 			</el-timeline>
@@ -52,31 +55,13 @@
 			...mapState(['archives', 'archNum'])
 		},
 		methods: {
-			...mapActions(['getArchives', 'getArchNum', 'getArtId']),
+			...mapActions(['getArchives', 'getArchNum']),
 			handleCurrentChange(val) {
 				this.cur_page = val
 				this.getArchives({
 					page: this.cur_page,
 					limit: 3
 				})
-			},
-			gotoArc(title, date) {
-				console.log(date)
-				/*this.getArtId({
-					'title': title,
-					'date': date
-				}).then((res) => {
-					if(res.status === 200) {
-						this.$router.push({
-							name: 'article',
-							params: {
-								'id': res.data
-							}
-						})
-					} else {
-						console.log('获取失败')
-					}
-				})*/
 			}
 		}
 	};
@@ -92,6 +77,14 @@
 			ul {
 				width: 60%;
 				margin: 0 20%;
+				.el-card__body {
+					p {
+						cursor: pointer;
+						&:hover {
+							color: #49b1f5
+						}
+					}
+				}
 			}
 			.el-pagination {
 				width: 30%;

@@ -195,7 +195,7 @@
 		computed: {
 			...mapState(['user', 'login_message', 'person_message', 'todoList', 'todoItem', 'commentNum', 'allcomments', 'messageBox']),
 			name() {
-				return this.user.name
+				return localStorage.getItem('userName')
 			},
 			commentsNum() {
 				return this.sum(this.commentNum)

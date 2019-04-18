@@ -10,7 +10,7 @@
 			<div class="handle-box">
 				<el-input v-model="title" placeholder="文章标题" class="handle-title mr10" size="small"></el-input>
 				<el-input v-model="imgUrl" placehoder="图片连接" class="handle-url mr10" size="small"></el-input>
- 				<el-tag :key="tag" v-for="tag in tags" closable :disable-transitions="false" @close="handleClose(tag)">
+				<el-tag :key="tag" v-for="tag in tags" closable :disable-transitions="false" @close="handleClose(tag)">
 					{{tag}}
 				</el-tag>
 				<el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
@@ -54,9 +54,8 @@
 		components: {
 			mavonEditor
 		},
-		created() {
+		mounted() {
 			const aid = this.$route.query.aid
-			//console.log(aid)
 			this.isSaving_ctl(false)
 			if(aid) {
 				return this.getArticle(aid)
@@ -119,6 +118,12 @@
 			},
 			Vcontent() {
 				this.isChange = true
+			},
+			'$route' (to, from) {
+				const aid = this.$route.query.aid
+				if(aid) {
+					return this.getArticle(aid)
+				}
 			}
 		},
 		methods: {
@@ -149,7 +154,9 @@
 				this.saveArticle(id).then((res) => {
 					if(res.status === 200) {
 						this.isSaving_ctl(true)
-						this.$router.push({name: 'essay'})
+						this.$router.push({
+							name: 'essay'
+						})
 					} else {
 						console.log('获取失败')
 					}
@@ -233,6 +240,7 @@
 		width: 300px;
 		display: inline-block;
 	}
+	
 	.editor-btn {
 		margin-top: 20px;
 	}

@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-import { Input, Select, Button, Icon, Tabs, TabPane, ButtonGroup, Breadcrumb, BreadcrumbItem,Checkbox,MenuItem, Submenu, ColorPicker, Pagination, Popover, Table, Menu, Tooltip, Tag, Dialog, Row, Form, FormItem, DatePicker, Card, Col, Option, TableColumn, MessageBox, Message, Notification, Timeline, TimelineItem} from 'element-ui'
+import { Input, Select, Button, Icon, Tabs, TabPane, ButtonGroup, Breadcrumb, BreadcrumbItem, Checkbox, MenuItem, Submenu, ColorPicker, Pagination, Popover, Table, Menu, Tooltip, Tag, Dialog, Row, Form, FormItem, DatePicker, Card, Col, Option, TableColumn, MessageBox, Message, Notification, Timeline, TimelineItem } from 'element-ui'
 Vue.component(Button.name, Button);
 Vue.component(Select.name, Select);
 Vue.component(Input.name, Input);
@@ -46,11 +46,31 @@ Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 Vue.prototype.$axios = axios
 
+document.body.oncopy = (event) => {
+	event.preventDefault(); // 取消默认的复制事件 
+	let textFont, copyFont = window.getSelection(0).toString(); // 被复制的文字 等下插入
+	if(copyFont.length > 10) {
+		textFont = copyFont + '\n' +
+			'作者：songyu\n' +
+			'来源：宋钰的博客\n';
+	} else {
+		textFont = copyFont; // 没超过十个字 则采用被复制的内容。
+	}
+	if(event.clipboardData) {
+		return event.clipboardData.setData('text', textFont); // 将信息写入粘贴板
+	} else {
+		// 兼容IE
+		return window.clipboardData.setData("text", textFont);
+	}
+}
+
 new Vue({
-    el: '#app',
-    router,
-    store,
-    axios,
-    template: '<App/>',
-    components: { App }
+	el: '#app',
+	router,
+	store,
+	axios,
+	template: '<App/>',
+	components: {
+		App
+	}
 })

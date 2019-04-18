@@ -97,13 +97,15 @@
 				delVisible1: false,
 				del_list: [],
 				cur_page: 1,
-				l_page: 1, //记录上一次出现的页面的情况
 				tableData: [],
 				multipleSelection: [],
 				cur_page: 1,
 				idx: -1,
 				save: false
 			}
+		},
+		beforeCreate() {
+			
 		},
 		created() {
 			this.getData(this.cur_page, 5)
@@ -143,6 +145,9 @@
 		watch: {
 			save() {
 				this.getData(this.cur_page, 5);
+			},
+			'$route' (to, from) {
+				this.getData(this.cur_page, 5)
 			}
 		},
 		methods: {
@@ -162,24 +167,23 @@
 			},
 			delAll() {
 				const length = this.multipleSelection.length;
-
 				this.delVisible = true;
 				for(let i = 0; i < length; i++) {
 					try {
 						if(this.delArticle({
-								aid: this.del_list[i].aid,
+								aid: this.multipleSelection[i].aid,
 								page: this.cur_page,
 								route: this.$route
 							})) {
-							this.del_list = this.del_list.concat(this.multipleSelection);
+							this.$message.success('删除成功');
+							this.del_list.push(this.multipleSelection[i]);
 						} else {
 							this.$message.info('删除失败')
 						}
 					} catch(err) {
 						console.log('aid is error')
 					}
-				}
-				this.$message.success('删除成功');
+				}				
 				this.delVisible = false
 				this.multipleSelection = [];
 			},
@@ -282,14 +286,14 @@
 							page: this.cur_page,
 							route: this.$route
 						})) {
+						this.$message.success('删除成功');
 						this.del_list.push(item)
 					} else {
-						this.$message.error('删除成功');
+						this.$message.error('删除失败');
 					}
 				} catch(err) {
 					console.log('aid is error')
-				}
-				this.$message.success('删除成功');
+				}	
 				this.delVisible1 = false;
 			}
 		},

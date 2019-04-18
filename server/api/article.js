@@ -38,11 +38,11 @@ router.post('/api/article', confirmToken, (req, res) => {
 				isPublish: true,
 				imgUrl: req.query.imgUrl
 			}
-			const archive = {
+			/*const archive = {
 				title: req.query.title,
 				date: d,
 				type: 'normal'
-			}
+			}*/
 			new db.Article(article).save()
 			//new db.Archive(archive).save()
 			return res.send({
@@ -164,21 +164,20 @@ router.delete('/api/article/:aid', confirmToken, (req, res) => {
 //文章更新
 router.patch('/api/article/:aid', confirmToken, (req, res) => {
 	const aid = req.query.aid
-	const d = Data()
 	const article = {
 		title: req.query.title,
 		tags: req.query.tags,
-		date: d,
+		date: Date(),
 		content: req.query.content,
 		isPublish: true,
 		imgUrl: req.query.imgUrl
 	}
 	
-	const archive = {
+	/*const archive = {
 		title: req.query.title,
 		date: d,
 		type: 'normal'
-	}
+	}*/
 	
 	//前提是保證沒有相同的title
 	

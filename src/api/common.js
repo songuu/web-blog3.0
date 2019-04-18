@@ -37,11 +37,3 @@ export const getArchNum = () => {
 		method: 'get'
 	})
 }
-
-export const getArtId = (payload) => {
-	return axios.request({
-		url: '/api/artId',
-		params: payload,
-		method: 'get'
-	})
-}

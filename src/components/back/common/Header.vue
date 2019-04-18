@@ -52,7 +52,7 @@
 				}
 			},
 			name() {
-				return this.user.name
+				return localStorage.getItem('userName')
 			}
 		},
 		methods: {

@@ -15,12 +15,15 @@
 				<div class="latest-comment">
 					<h3>最新留言</h3>
 					<hr />
-					<ul>
+					<ul v-if="allcomment.length !== 0">
 						<li v-for="names in allcomment">
 							<el-popover placement="right" title="评论内容" width="200" trigger="hover" :content='names.content'>
 								<router-link :to="{name: 'article', params: {id: names.articleId}}" tag="a" slot="reference">{{ names.name }}</router-link>
 							</el-popover>
 						</li>
+					</ul>
+					<ul v-else>
+						<li style="color: red;">暂时没有评论</li>
 					</ul>
 				</div>
 				<!--最新留言-->
@@ -79,7 +82,7 @@
 					</div>
 				</div>
 				<div class="block">
-					<el-pagination @current-change="handleCurrentChange" :page-size="4" :current-page="page" layout="total, prev, pager, next, jumper" :total="aids.length" size="small">
+					<el-pagination @current-change="handleCurrentChange" :page-size="4" :current-page="page" layout="total, prev, pager, next" :total="aids.length" size="small">
 					</el-pagination>
 				</div>
 			</section>
@@ -299,7 +302,7 @@
 						"count": a[i]
 					})
 				}
-				
+
 				return res;
 			}
 		},

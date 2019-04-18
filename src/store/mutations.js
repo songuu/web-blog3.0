@@ -3,15 +3,13 @@ import {setSession} from '@/lib/utils'
 export default {
 	// login
 	set_user: (state, user) => { //设置缓存数据
-		/*localStorage.setItem('token', user.token)
-		localStorage.setItem('userName', user.name)*/
+		localStorage.setItem('userName', user.name)
 		state.user = user
 		state.session = user.token
 		setSession(user.token)
 	},
 	unset_user: (state) => {
-		/*localStorage.removeItem('token')
-		localStorage.removeItem('userName')*/
+		localStorage.removeItem('userName')
 		state.user = {}
 		state.session = ''
 		setSession('')

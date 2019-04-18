@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const data = require('./mock/data')
-const archive = require('./mock/archive')
+/*const archive = require('./mock/archive')*/
 const plan = require('./mock/plan')
 const book = require('./mock/book')
 const music = require('./mock/music')
@@ -18,7 +18,7 @@ const UserSchema = new Schema({
 	versionKey: false
 })
 
-const ArchiveSchema = new Schema({
+/*const ArchiveSchema = new Schema({
 	hid: {
 		type: Number,
 		index: {
@@ -31,7 +31,7 @@ const ArchiveSchema = new Schema({
 	type: String
 },{
 	versionKey: false
-})
+})*/
 
 const ArticleSchema = new Schema({
 	aid: {
@@ -149,7 +149,7 @@ ArticleSchema.pre('save', function(next) {
 		next();
 	}
 })
-ArchiveSchema.pre('save', function(next) {
+/*ArchiveSchema.pre('save', function(next) {
 	var self = this;
 	if(self.isNew) {
 		Sequence.increment('Archive', function(err, result) {
@@ -162,7 +162,7 @@ ArchiveSchema.pre('save', function(next) {
 	} else {
 		next();
 	}
-})
+})*/
 PlanSchema.pre('save', function(next) {
 	var self = this;
 	if(self.isNew) {
@@ -238,8 +238,8 @@ const Models = {
 	Book: mongoose.model('Book', BookSchema),
 	Music: mongoose.model('Music', MusicSchema),
 	Movie: mongoose.model('Movie', MovieSchema),
-	Common: mongoose.model('Common', CommonSchema),
-	Archive: mongoose.model('Archive', ArchiveSchema)
+	Common: mongoose.model('Common', CommonSchema)
+	//Archive: mongoose.model('Archive', ArchiveSchema)
 }
 
 // 初始化数据
@@ -273,10 +273,10 @@ const initialize = () => {
 						}),
 						movie.map((item) => {
 							new Models['Movie'](item).save()
-						}),
-						archive.map((item) => {
-							new Models['Archive'](item).save()
 						})
+						/*archive.map((item) => {
+							new Models['Archive'](item).save()
+						})*/
 					]
 				).then(() => {
 					console.log('initialize successfully')
