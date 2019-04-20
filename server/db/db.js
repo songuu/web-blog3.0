@@ -6,6 +6,7 @@ const plan = require('./mock/plan')
 const book = require('./mock/book')
 const music = require('./mock/music')
 const movie = require('./mock/movie')
+const common = require('./mock/common')
 const sha1 = require('sha1')
 const rand = require('csprng')
 const Sequence = require('./sequence')
@@ -124,7 +125,7 @@ const MovieSchema = new Schema({
 	versionKey: false
 })
 const CommonSchema = new Schema({
-	Fid: {
+	fid: {
 		type: Number,
 		index: {
 			unique: true
@@ -133,7 +134,7 @@ const CommonSchema = new Schema({
 	name: String,
 	url: String,
 	type: String,
-	dir: String //文件描述
+	time: Date
 })
 // 生成从0开始自增长的文章aid
 ArticleSchema.pre('save', function(next) {
@@ -222,7 +223,7 @@ CommonSchema.pre('save', function(next) {
 			if(err) {
 				throw err;
 			}
-			self.Fid = result.value.next;
+			self.fid = result.value.next;
 			next();
 		})
 	} else {
@@ -273,6 +274,9 @@ const initialize = () => {
 						}),
 						movie.map((item) => {
 							new Models['Movie'](item).save()
+						}),
+						common.map((item) => {
+							new Models['Common'](item).save()
 						})
 						/*archive.map((item) => {
 							new Models['Archive'](item).save()

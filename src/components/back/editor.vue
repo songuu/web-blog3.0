@@ -9,7 +9,7 @@
 		<div class="container1">
 			<div class="handle-box">
 				<el-input v-model="title" placeholder="文章标题" class="handle-title mr10" size="small"></el-input>
-				<el-input v-model="imgUrl" placehoder="图片连接" class="handle-url mr10" size="small"></el-input>
+				<el-input v-model="imgUrl" placeholder="图片连接" class="handle-url mr10" size="small" placehold></el-input>
 				<el-tag :key="tag" v-for="tag in tags" closable :disable-transitions="false" @close="handleClose(tag)">
 					{{tag}}
 				</el-tag>
@@ -17,7 +17,7 @@
 				</el-input>
 				<el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
 			</div>
-			<mavon-editor v-model="Vcontent" ref="md" @imgAdd="$imgAdd" @change="change" style="min-height: 600px" />
+			<mavon-editor v-model="Vcontent" ref="md" @imgAdd="$imgAdd1" @imgDel="$imgDel" @change="change" style="min-height: 600px" />
 			<el-button class="editor-btn" type="primary" @click="save($route.query.aid);isSaving = true">提交</el-button>
 		</div>
 		<el-dialog title="提示" :visible.sync="addVisible" width="300px" center>
@@ -48,7 +48,8 @@
 				inputValue: '',
 				addVisible: false,
 				isChange: false,
-				isSaving: false
+				isSaving: false,
+				file_list: []
 			}
 		},
 		components: {
@@ -131,6 +132,7 @@
 			...mapActions(['saveArticle', 'getArticle']),
 			$imgAdd(pos, $file) {
 				//上传到七牛云
+				this.file_list[pos] = $file
 				this.$axios({
 					url: '/api/getToken',
 					method: 'post'
@@ -149,6 +151,32 @@
 						this.$refs.md.$img2Url(pos, 'http://' + res.data.domain + '/' + url.data.key);
 					})
 				})
+			},
+			$imgAdd1(pos, $file) {
+				this.file_list[pos] = $file
+				let formdata = new FormData();
+				formdata.append('title', this.article.title)
+				formdata.append('file', $file);
+				this.$axios({
+					url: '/api/upload',
+					method: 'post',
+					data: formdata,
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}).then((res) => {
+					if(res.status === 200) {
+						let url = res.data.data
+						this.$refs.md.$img2Url(pos, url);
+					} else {
+						this.$message.info('上传失败')
+					}
+				}).catch((err) => {
+					console.log(err)
+				})
+			},
+			$imgDel(pos) {
+				delete this.file_list[pos]
 			},
 			save(id) {
 				this.saveArticle(id).then((res) => {

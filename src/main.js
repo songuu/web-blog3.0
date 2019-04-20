@@ -4,8 +4,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import VueClipboard from 'vue-clipboard2'
 
-import { Input, Select, Button, Icon, Tabs, TabPane, ButtonGroup, Breadcrumb, BreadcrumbItem, Checkbox, MenuItem, Submenu, ColorPicker, Pagination, Popover, Table, Menu, Tooltip, Tag, Dialog, Row, Form, FormItem, DatePicker, Card, Col, Option, TableColumn, MessageBox, Message, Notification, Timeline, TimelineItem } from 'element-ui'
+import { Input, Select, Button, Icon, Tabs, TabPane, ButtonGroup, Breadcrumb, BreadcrumbItem, Checkbox, MenuItem, Submenu, ColorPicker, Pagination, Popover, Table, Menu, Tooltip, Tag, Dialog, Row, Form, FormItem, DatePicker, Card, Col, Option, TableColumn, MessageBox, Message, Notification, Timeline, TimelineItem, Upload } from 'element-ui'
 Vue.component(Button.name, Button);
 Vue.component(Select.name, Select);
 Vue.component(Input.name, Input);
@@ -35,12 +36,15 @@ Vue.component(ColorPicker.name, ColorPicker);
 Vue.component(Submenu.name, Submenu);
 Vue.component(TableColumn.name, TableColumn);
 Vue.component(ButtonGroup.name, ButtonGroup);
-Vue.component(Timeline.name, Timeline)
-Vue.component(TimelineItem.name, TimelineItem)
+Vue.component(Timeline.name, Timeline);
+Vue.component(TimelineItem.name, TimelineItem);
+Vue.component(Upload.name, Upload);
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
+
+Vue.use(VueClipboard)
 
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;

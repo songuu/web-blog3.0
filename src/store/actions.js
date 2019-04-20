@@ -7,6 +7,7 @@ import { sendMail, getAllTags, updateMessage, getArchives, getArchNum } from '@/
 import { getComments, getCommentsNum, summitComment, updateLike, getAllComments } from '@/api/comment'
 import { getAllplans, delPlan, savePlan } from '@/api/plan'
 import { getAllbooks, getAllmusics, getAllmovies, saveBook, saveMusic, saveMovie, delBook, delMusic, delMovie, getNewbooks, getNewmovies, getNewmusics, getBook, getMusic, getMovie, searchBooks, searchMovies, searchMusics } from '@/api/resource'
+import { getAllfiles, delFile, getFilesNum } from '@/api/file'
 
 const beginLoading = (commit, add) => {
 	add ? commit('loadMore_toggle', true) : commit('isLoading_toggle', true)
@@ -693,6 +694,51 @@ export default {
 		return getArchNum().then((res) => {
 			if(res.status === 200) {
 				commit('set_archNum', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	getAllfiles({
+		commit
+	}, payload) {
+		return getAllfiles(payload).then((res) => {
+			if(res.status === 200) {
+				commit('set_all_files', res.data)
+			} else {
+				console.log('获取失败')
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	delFile({
+		state,
+		dispatch
+	}, payload) {
+		return delFile(state.session, payload.fid).then((res) => {
+			if(res.status === 200) {
+				dispatch('getAllfiles', {
+					page: payload.page,
+					limit: 3
+				})
+				dispatch('getFilesNum')
+				return true
+			} else {
+				return false
+			}
+		}).catch((err) => {
+			console.log(err)
+		})
+	},
+	getFilesNum({
+		commit
+	}) {
+		return getFilesNum().then((res) => {
+			if(res.status === 200) {
+				commit('set_filesNum', res.data)
 			} else {
 				console.log('获取失败')
 			}

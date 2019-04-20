@@ -134,7 +134,7 @@ router.post('/api/articles', (req, res) => {
 router.delete('/api/article/:aid', confirmToken, (req, res) => {
 	db.Article.remove({
 		aid: req.query.aid
-	}, (err, data) => {
+	}, (err) => {
 		if(err) {
 			return res.send({
 				status: 500,

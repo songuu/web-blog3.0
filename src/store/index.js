@@ -20,6 +20,8 @@ const store = new Vuex.Store({
 		tags: [],
 		curTag: '',
 		aids: [],
+		allFiles: [],
+		filesNum: 0,
 		todoList: [],
 		todoItem: {},
 		archives: [],

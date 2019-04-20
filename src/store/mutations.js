@@ -133,14 +133,18 @@ export default {
 	moreMovie_toggle: (state, flag) => {
 		state.moreMovie = flag
 	},
-	set_all_files: (state, files) => {
-		state.files = files
-	},
 	//设置档案
 	set_archives: (state, archives) => {
 		state.archives = archives
 	},
 	set_archNum: (state, archNum) => {
 		state.archNum = archNum
+	},
+	//设置其他资源
+	set_all_files: (state, allFiles) => {
+		state.allFiles = allFiles
+	},
+	set_filesNum: (state, filesNum) => {
+		state.filesNum = filesNum
 	}
 }
