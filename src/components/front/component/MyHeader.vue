@@ -4,7 +4,7 @@
 			<div class="banner">
 				<router-link :to="{name: 'index'}" tag="span">
 					<i class="iconfont icon-logo"></i>
-					<h3 class="h-title">bitter life</h3>
+					<h3 class="h-title">宋钰的个人博客</h3>
 				</router-link>
 			</div>
 			<nav>
@@ -13,7 +13,7 @@
 						博客
 					</el-menu-item>
 					<el-menu-item index="/archives">
-						档案
+						个人经历
 					</el-menu-item>
 					<el-submenu index="3">
 						<template slot="title">{{title}}</template>

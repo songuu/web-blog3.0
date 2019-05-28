@@ -4,7 +4,7 @@
 			<p class="headline" id="about_me">ABOUT ME</p>
 		</a>
 		<div class="info animated tada">
-			<img src="http://pa5114ths.bkt.clouddn.com/me1.jpg" alt="self" />
+			<img src="../../../assets/img/me.jpg" alt="self" />
 			<div class="wraper">
 				<p class="left">邮箱:</p>
 				<p class="right">songyuduck@163.com</p>

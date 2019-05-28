@@ -1,7 +1,7 @@
 <template>
 	<div id='comment'>
 		<div class='newComment'>
-			<img :src="'http://pa5114ths.bkt.clouddn.com/' + imgName + '.jpg'" />
+			<img :src="'http://127.0.0.1:3003/img/common/20195520113' + imgName + '.jpg'"  />
 			<textarea spellcheck='false' placeholder='评论区' v-model='content' id='reply' ref='textBox'></textarea>
 			<div class="inputBox">
 				<input type='text' placeholder='邮箱 (用于通知)' v-model='address' />
@@ -62,10 +62,10 @@
 			})
 			if(this.session && this.user.name) {
 
-				this.imgName = 'myself'
+				this.imgName = 'me'
 			} else {
 
-				this.imgName = 'reviewer'
+				this.imgName = 'self'
 			}
 			if(localStorage.reviewer) {
 				this.address = localStorage['e-mail']

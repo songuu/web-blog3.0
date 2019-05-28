@@ -157,16 +157,12 @@
 			copy(link) {
 				this.$copyText(link).then(function(e) {
 					alert('Copied')
-					console.log(e)
 				}, function(e) {
 					alert('Can not copy')
-					console.log(e)
 				})
 			},
 			del() {
-				console.log(this.idx)
 				const item = this.tableData[this.idx]
-				console.log(item)
 				try {
 					if(this.delFile({
 							fid: item.fid,

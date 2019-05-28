@@ -6,7 +6,7 @@
 					<el-col>
 						<el-card shadow="hover" class="mgb20">
 							<div class="user-info">
-								<img src="http://pa5114ths.bkt.clouddn.com/me1.jpg" class="user-avator" alt="管理员头像" />
+								<img src="../../assets/img/me.jpg" class="user-avator" alt="管理员头像" />
 								<div class="user-info-cont">
 									<div class="user-info-name">
 										{{ name }}

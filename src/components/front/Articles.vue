@@ -31,7 +31,7 @@
 					<h3>关于</h3>
 					<hr />
 					<div class="avater">
-						<img src="http://pa5114ths.bkt.clouddn.com/me1.jpg" />
+						<img src="../../assets/img/self.jpg" />
 						<!--头像设置-->
 					</div>
 					<div class="about_content">

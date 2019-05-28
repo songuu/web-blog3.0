@@ -91,7 +91,7 @@
 			position: relative;
 			top: 0px;
 			.form {
-				background: #f7f2ec url('http://pa5114ths.bkt.clouddn.com/letter.jpg');
+				background: #f7f2ec url(../../../assets/img/letter_bg.png);
 				position: relative;
 				top: 15px;
 				overflow: hidden;

@@ -4,7 +4,7 @@
 			<div class="drag-box">
 				<div class="drag-box-item">
 					<div class="item-title">图书</div>
-					<books-content></books-content>
+					<books-content></books-content>					
 				</div>
 				<div class="drag-box-item">
 					<div class="item-title">音乐</div>
